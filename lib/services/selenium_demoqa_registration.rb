@@ -10,9 +10,9 @@ class SeleniumDemoReg
   MARITAL_STATUS = "radio_4[]" # id
   HOBBY_STATUS = "checkbox_5[]" # values
   COUNTRY_DROP_DOWN_LIST = "dropdown_7" # id
-  DOB_MONTH_DROPDOWN_LIST = "mm_date_8" # id
-  DOB_DAY_DROPDOWN_LIST = "dd_date_8" # id
-  DOB_YEAR_DROPDOWN_LIST = "yy_date_8" # id
+  DOB_MONTH_DROPDOWN_LIST = "date_8[date][mm]" # id
+  DOB_DAY_DROPDOWN_LIST = "date_8[date][dd]" # id
+  DOB_YEAR_DROPDOWN_LIST = "date_8[date][yy]" # id
   PHONE_NUMBER_FIELDS = "phone_9" # id
   USERNAME_FIELD = "username" # id
   EMAIL_FIELD = "email_1" # id
@@ -76,6 +76,12 @@ class SeleniumDemoReg
   def select_hobby_option(hobby)
     # Consider something like a case statement and check the selenium selected? method
     @chrome_driver.find_elements(:name, HOBBY_STATUS)[hobby].click
+
+  end
+
+  def get_hobby_option(hobby)
+    @chrome_driver.find_elements(:name, HOBBY_STATUS)[hobby].selected?
+
   end
 
   # Select Country - Difficulty HARD
@@ -100,15 +106,24 @@ class SeleniumDemoReg
 
 
   def dob_month_list_select(month_value)
-    @chrome_driver.find_element(:id, DOB_MONTH_DROPDOWN_LIST).send_keys(month_value)
+    @chrome_driver.find_element(:name, DOB_MONTH_DROPDOWN_LIST).send_keys(month_value)
+  end
+  def dob_month_list_get_value
+    p @chrome_driver.find_element(:name, DOB_MONTH_DROPDOWN_LIST)['value']
   end
 
   def dob_day_list_select(day_value)
-    @chrome_driver.find_element(:id, DOB_DAY_DROPDOWN_LIST).send_keys(day_value)
+    @chrome_driver.find_element(:name, DOB_DAY_DROPDOWN_LIST).send_keys(day_value)
+  end
+  def dob_day_list_get_value
+    p @chrome_driver.find_element(:name, DOB_DAY_DROPDOWN_LIST)['value']
   end
 
   def dob_year_list_select(year_value)
-    @chrome_driver.find_element(:id, DOB_YEAR_DROPDOWN_LIST).send_keys(year_value)
+    @chrome_driver.find_element(:name, DOB_YEAR_DROPDOWN_LIST).send_keys(year_value)
+  end
+  def dob_year_list_get_value
+    p @chrome_driver.find_element(:name, DOB_YEAR_DROPDOWN_LIST)['value']
   end
 
 
@@ -179,6 +194,5 @@ class SeleniumDemoReg
   def check_registration_successful
     @chrome_driver.find_element(:class, 'piereg_message').displayed?
   end
-
 
 end
